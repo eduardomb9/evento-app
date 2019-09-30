@@ -1,11 +1,11 @@
 <template>
   <div class="container">
       <h3>LISTA DE PARTICIPANTES</h3>
-    <ul v-for="part in participantes" :key="part.id">
-        <li>
-            {{ part.nome }}
-        </li>
-    </ul>
+    <v-list v-for="part in participantes" :key="part.id">
+            <v-list-item-content>
+                <v-list-item-title v-text="part.nome"></v-list-item-title>
+            </v-list-item-content>
+    </v-list>
   </div>
 </template>
 
