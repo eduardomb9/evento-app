@@ -46,6 +46,7 @@ td {
     </v-form>
 
     <ParticipantesList v-show="editando" :participantes="participantes" />
+    
   </div>
 </template>
 
@@ -132,7 +133,7 @@ export default {
       Evento.adicionar(this.evento)
         .then(resp => {
           this.eventos.push(this.evento);
-          console.log("THENNNNN");
+          console.log( { resp } );
         })
         .catch(e => {
           console.log(e);

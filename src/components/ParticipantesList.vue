@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <h3>LISTA DE PARTICIPANTES</h3>
+      <h3>LISTA DE PARTICIPANTES: </h3>
     <v-list v-for="part in participantes" :key="part.id">
             <v-list-item-content>
                 <v-list-item-title v-text="part.nome"></v-list-item-title>
@@ -17,18 +17,5 @@ export default {
     props: {
         participantes: Array,
     },
-    data: function () {
-        return {
-        }
-    },
-    methods: {
-        clicou: function() {
-            console.log('Clicou na lista de participantes!')
-        }
-    },
 }
 </script>
-
-<style>
-
-</style>

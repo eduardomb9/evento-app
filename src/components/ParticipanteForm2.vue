@@ -20,7 +20,7 @@
 </template>
 <script>
 import Evento from '../service/eventos'
-  import Participante from '../service/participantes'
+import Participante from '../service/participantes'
 
 export default {
     name: 'ParticipanteForm',
