@@ -1,6 +1,6 @@
 <style>
-td {
-  text-align: center;
+#espaco {
+  margin-top: 40px;
 }
 </style>
 
@@ -21,7 +21,7 @@ td {
             <button type="button" @click="remover(val.id)">X</button>
           </td>
           <td>
-            <button type="button" @click="editar(val)">/</button>
+            <button type="button" @click="editar(val)"><i class="material-icons">edit</i></button>
           </td>
           <td>
             <button type="button" @click="$emit('add-participante', val)">+</button>
@@ -29,14 +29,16 @@ td {
         </tr>
       </tbody>
     </v-simple-table>
+    <div id="espaco" />
     <p v-if="erros.length">
-    <b>Please correct the following error(s):</b>
+      <b>Os seguintes erros foram encontrados:</b>
     </p>
-    <ul>
-    <li v-for="error in erros" :key="error">{{ error }}</li>
-    </ul>
+    <v-list>
+      <v-list-item-content v-for="error in erros" :key="error">
+        <v-list-item>{{ error }}</v-list-item>
+      </v-list-item-content>
+    </v-list>
     <v-form ref="form">
-      <v-text-field :rules="regras.id" :disabled="desativado" required v-model="evento.id" placeholder="Código" />
       <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
       <div style="float: right">
         <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
@@ -64,19 +66,13 @@ export default {
   data: function() {
     return {
       desativado: false,
-      eventos: [],
       editando: false,
+      eventos: [],
       eventoCopia: { id: "", nome: "" },
       evento: { id: "", nome: "" },
       participantes: [],
       erros: [],
       regras: {
-        id: [
-          value => !!value || "Campo obrigatorio.",
-          value =>
-            (!value || value.match("^[0-9]+$") || "") > 0 ||
-            "Requer apenas numeros."
-        ],
         nome: [
           value => !!value || "Campo obrigatorio.",
           value => (value.length || "") >= 3 || "Mínimo de 3 caracteres."
@@ -121,31 +117,29 @@ export default {
       this.$refs.form.resetValidation();
     },
     adicionar: function() {
-        this.erros = []
+      this.erros = []
 
-        if (!this.evento.nome) {
-            this.erros.push('Campo nome é obrigatorio.')
-            return
-        } else if (this.evento.nome.length < 3) {
-            this.erros.push('Campo nome deve ser maior que 2.')
-            return
-        }
+      if (!this.evento.nome) {
+          this.erros.push('Campo nome é obrigatorio.')
+          return
+      } else if (this.evento.nome.length < 3) {
+          this.erros.push('Campo nome deve ser maior que 2.')
+          return
+      }
+
       Evento.adicionar(this.evento)
-        .then(resp => {
-          this.eventos.push(this.evento);
-          console.log( { resp } );
+        .then(response => {
+          this.eventos.push(response.data);
         })
         .catch(e => {
-          console.log(e);
+          this.erros.push('Erro geral contate administração!')
         });
-
-      this.evento = { id: '', nome: '' };
-      this.$refs.form.resetValidation();
+        this.evento = { id: '', nome: '' };
+        this.$refs.form.resetValidation();
     },
   },
   mounted: function() {
     Evento.listar().then(response => {
-      console.log(response);
       this.eventos = response.data;
     });
   }

@@ -22,15 +22,10 @@ export default {
   },
 
   adicionar: (evento) => {
+    let resultado = {}
     return http.post(url + '/', {
-        id: evento.id,
-        nome: evento.nome
-    })
-    .then(response => {
-        console.log(response)
-    })
-    .catch(error => {
-        console.log(error)
+      id: evento.id,
+      nome: evento.nome
     })
   },
 

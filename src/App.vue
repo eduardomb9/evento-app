@@ -1,14 +1,16 @@
 <template>
     <div id="app">
+    <v-app>
 
-  <v-tabs style="margin-bottom: 30px">
-    <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
-    <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
-  </v-tabs>
+    <v-tabs style="margin-bottom: 30px">
+      <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
+      <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
+    </v-tabs>
 
-      <component :is="principal" v-on:add-participante="showParticipanteId" ></component>
+    <component :is="principal" @add-participante="mostrarDialog" ></component>
+    <participante-form :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" />
 
-      <participante-form :dialog="dialog" :evento="eventoEdit" />
+    </v-app>
     </div>
 </template>
 
@@ -35,19 +37,18 @@ export default {
           formParticipante : 'participante-form',
         },
         participantes: [
-          'Ana',
-          'Paulo',
-          'Lucas',
-          'Maria',
         ], 
         dialog: false,
         eventoEdit: { id: '', nome: '' }
     }
   },
   methods: {
-    showParticipanteId: function (evento) {
+    mostrarDialog: function (evento) {
       this.eventoEdit = evento
       this.dialog = true
+    },
+    fechar: function () {
+      this.dialog = false
     }
   }
 }
