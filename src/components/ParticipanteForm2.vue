@@ -47,7 +47,8 @@ export default {
     },
     methods: {
       salvar: function () {
-        Evento.adicionarParticipante(this.evento.id, this.participante).then(resp => {
+        Evento.adicionarParticipante(this.evento.id, this.participante)
+        .then(resp => {
           this.participanteId = ''
           this.participante = { id: '', nome: '' }
           this.dialog2 = false

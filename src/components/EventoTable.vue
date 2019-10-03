@@ -23,15 +23,13 @@
         </tr>
       </tbody>
     </v-simple-table>
+    
     <div id="espaco" />
-    <p v-if="erros.length">
-      <b>Os seguintes erros foram encontrados:</b>
-    </p>
-    <v-list>
-      <v-list-item-content v-for="error in erros" :key="error">
-        <v-list-item>{{ error }}</v-list-item>
-      </v-list-item-content>
-    </v-list>
+
+    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="msg in messages" top>
+      {{ msg }}
+    </v-snackbar>
+
     <v-form ref="form">
       <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
       <div style="float: right">
@@ -41,31 +39,39 @@
       </div>
     </v-form>
 
+    <DialogConfirm :dialog="dialogConfirm" @confirm="excluir" @cancel="cancelar" />
     <ParticipantesList v-show="editando" :participantes="participantes" />
-    
+
   </div>
 </template>
 
 <script>
 import Evento from "../service/eventos";
 import ParticipantesList from "./ParticipantesList";
+import DialogConfirm from "./DialogConfirm"
 import { isNullOrUndefined } from "util";
 
 export default {
   name: "EventoTable",
   props: {},
   components: {
-    ParticipantesList
+    ParticipantesList,
+    DialogConfirm
+  },
+  computed: {
   },
   data: function() {
     return {
+      dialogConfirm: false,
+      snackbar: false,
+      timeout: 2000,
       desativado: false,
       editando: false,
       eventos: [],
-      eventoCopia: { id: "", nome: "" },
-      evento: { id: "", nome: "" },
+      eventoCopia: { id: '', nome: '' },
+      evento: { id: '', nome: '' },
       participantes: [],
-      erros: [],
+      messages: [],
       regras: {
         nome: [
           value => !!value || "Campo obrigatorio.",
@@ -76,8 +82,21 @@ export default {
   },
   methods: {
     remover: function(id) {
-      Evento.remover(id);
-      this.eventos = this.eventos.filter(val => val.id !== id);
+      this.eventoCopia.id = id
+      this.dialogConfirm = true
+    },
+    excluir: function () {
+      let id = this.eventoCopia.id
+      Evento.remover(id).then(resp => {
+        this.eventos = this.eventos.filter(val => val.id !== id)
+        this.messages.push('Evento removido com sucesso.')
+        this.snackbar = true
+      }).catch(e => {
+        this.messages.push('Erro ao remover um evento. Verifique se o evento têm participantes associados.')
+        this.snackbar = true
+      })
+      this.dialogConfirm = false
+      this.eventoCopia.id = ''
     },
     editar: function(evento) {
       let participantes = Evento.obterParticipantesPorId(evento.id).then(
@@ -94,7 +113,12 @@ export default {
       this.$refs.form.resetValidation();
     },
     salvar: function() {
-      Evento.editar(this.evento);
+      Evento.editar(this.evento)
+      .then(resp => {
+        this.messages.push('Alteração realizada com sucesso.')
+        this.snackbar = true
+      })
+
       this.evento = { id: "", nome: "" };
       this.editando = false;
       this.desativado = false;
@@ -104,20 +128,23 @@ export default {
     cancelar: function() {
       this.evento.id = this.eventoCopia.id;
       this.evento.nome = this.eventoCopia.nome;
-      this.evento = { id: "", nome: "" };
+      this.evento = { id: '', nome: '' };
       this.editando = false;
       this.desativado = false;
       this.participantes = [];
+      this.dialogConfirm = false
       this.$refs.form.resetValidation();
     },
     adicionar: function() {
-      this.erros = []
+      this.messages = []
 
       if (!this.evento.nome) {
-          this.erros.push('Campo nome é obrigatorio.')
+          this.messages.push('Campo nome é obrigatorio.')
+          this.snackbar = true
           return
       } else if (this.evento.nome.length < 3) {
-          this.erros.push('Campo nome deve ser maior que 2.')
+          this.messages.push('Campo nome deve ser maior que 2.')
+          this.snackbar = true
           return
       }
 
@@ -126,10 +153,14 @@ export default {
           this.eventos.push(response.data);
         })
         .catch(e => {
-          this.erros.push('Erro geral contate administração!')
+          this.messages.push('Erro geral contate administração!')
         });
-        this.evento = { id: '', nome: '' };
-        this.$refs.form.resetValidation();
+
+      this.messages.push('Evento adicionado com sucesso')
+      this.snackbar = true
+      this.evento = { id: '', nome: '' }
+      this.$refs.form.resetValidation();
+        
     },
   },
   mounted: function() {

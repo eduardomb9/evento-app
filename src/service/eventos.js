@@ -31,22 +31,10 @@ export default {
 
   remover: (id) => {
     return http.delete(url + '/' + id)
-      .then(response => {
-        console.log(response)
-      })
-      .then(error => {
-        console.log(error)
-      })
   },
 
   editar:  (evento) => {
     return http.put(url + '/' + evento.id, evento)
-      .then(response => {
-        console.log('Editando evento de id: ' + evento.id)
-      })
-      .then(error => {
-        console.log(error)
-      })
   }
 
 }
