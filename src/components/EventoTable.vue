@@ -10,21 +10,15 @@
       <thead>
         <th>Id</th>
         <th>Nome</th>
-        <th>Remover</th>
-        <th>Editar</th>
-        <th>add Participantes</th>
+        <th>Ações</th>
       </thead>
       <tbody>
         <tr v-for="val in eventos" :key="val.id">
           <td v-for="data in val" :key="data">{{ data }}</td>
           <td>
-            <button type="button" @click="remover(val.id)">X</button>
-          </td>
-          <td>
-            <button type="button" @click="editar(val)"><i class="material-icons">edit</i></button>
-          </td>
-          <td>
-            <button type="button" @click="$emit('add-participante', val)">+</button>
+            <button type="button" @click="remover(val.id)"><v-icon color="primary">mdi-delete</v-icon></button>
+            <button type="button" @click="editar(val)"><v-icon color="primary">mdi-pencil</v-icon></button>
+            <button type="button" @click="$emit('add-participante', val)"><v-icon color="primary">mdi-plus</v-icon></button>
           </td>
         </tr>
       </tbody>

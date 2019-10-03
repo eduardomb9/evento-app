@@ -9,8 +9,8 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="blue darken-1" text @click="dialog2 = false">Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog2 = false">Salvar</v-btn>
+          <v-btn color="blue darken-1" text @click="cancelar">Cancelar</v-btn>
+          <v-btn color="blue darken-1" text @click="salvar">Salvar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -47,20 +47,15 @@ export default {
     },
     methods: {
       salvar: function () {
-        console.log(this.participante)
-        Participante.adicionar(this.participante).then(response => {
-          console.log(response)
-          Evento.adicionarParticipante(this.evento.id, this.participante).then(resp => {
-            this.participanteId = ''
-            this.participante = { id: '', nome: '' }
-            // this.dialogData = false
-            
-          })
+        Evento.adicionarParticipante(this.evento.id, this.participante).then(resp => {
+          this.participanteId = ''
+          this.participante = { id: '', nome: '' }
+          this.dialog2 = false
         })
       },
       cancelar: function () {
         this.participante = { id: '', nome: '' }
-        this.$emit('fechar-dialog')
+        this.dialog2 = false
       },
     },
       mounted: function () {
