@@ -21,7 +21,6 @@ export default {
             headers: [
                 { text: 'Código', value: 'id' },
                 { text: 'Nome', value: 'nome' },
-                { text: 'Ações', value: 'acao' },
             ],
             participantes: [
             ],
