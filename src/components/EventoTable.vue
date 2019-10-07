@@ -1,7 +1,4 @@
 <style>
-#espaco {
-  margin-top: 40px;
-}
 </style>
 
 <template>
@@ -24,9 +21,7 @@
       </tbody>
     </v-simple-table>
     
-    <div id="espaco" />
-
-    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="msg in messages" top>
+    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
       {{ msg }}
     </v-snackbar>
 
@@ -40,7 +35,7 @@
     </v-form>
 
     <DialogConfirm :dialog="dialogConfirm" @confirm="excluir" @cancel="cancelar" />
-    <ParticipantesList v-show="editando" :participantes="participantes" />
+    <ParticipantesList v-show="!!participantes.length" :participantes="participantes" />
 
   </div>
 </template>
