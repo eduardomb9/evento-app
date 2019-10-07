@@ -1,8 +1,7 @@
 <template>
-    <div id="app">
     <v-app>
 
-    <v-tabs style="margin-bottom: 30px">
+    <v-tabs dark>
       <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
       <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
     </v-tabs>
@@ -11,7 +10,6 @@
     <participante-form :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" />
 
     </v-app>
-    </div>
 </template>
 
 <script>
