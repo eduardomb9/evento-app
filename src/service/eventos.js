@@ -25,7 +25,10 @@ export default {
     let resultado = {}
     return http.post(url + '/', {
       id: evento.id,
-      nome: evento.nome
+      nome: evento.nome,
+      tipoEvento: {
+        id : evento.tipoEvento.id
+      },
     })
   },
 
