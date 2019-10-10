@@ -102,7 +102,6 @@ export default {
       this.eventoCopia.id = ''
     },
     editar: function(evento) {
-      console.log(evento)
       Evento.obterParticipantesPorId(evento.id).then(
         response => {
           this.participantes = response.data;
