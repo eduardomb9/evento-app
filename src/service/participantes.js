@@ -28,12 +28,6 @@ export default {
 
   remover: (id) => {
     return http.delete(url + '/' + id)
-      .then(response => {
-        console.log(response)
-      })
-      .then(error => {
-        console.log(error)
-      })
   },
 
   editar:  (participante) => {
