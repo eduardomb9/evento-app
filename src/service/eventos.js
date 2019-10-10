@@ -27,7 +27,8 @@ export default {
       id: evento.id,
       nome: evento.nome,
       tipoEvento: {
-        id : evento.tipoEvento.id
+        id : evento.tipoEvento.id,
+        descricao: evento.tipoEvento.descricao,
       },
     })
   },

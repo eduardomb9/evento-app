@@ -102,7 +102,8 @@ export default {
       this.eventoCopia.id = ''
     },
     editar: function(evento) {
-      let participantes = Evento.obterParticipantesPorId(evento.id).then(
+      console.log(evento)
+      Evento.obterParticipantesPorId(evento.id).then(
         response => {
           this.participantes = response.data;
         }
@@ -163,14 +164,12 @@ export default {
       });
       
       this.snackbar = true
-      this.atualizarTextoTabela(this.evento.tipoEvento.id)
       this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } }
       this.$refs.form.resetValidation();
     },
     atualizarTextoTabela: function (id) {
       this.tiposEventos.forEach(item => {
         if (item.id == id) {
-          console.log(item.descricao)
           this.evento.tipoEvento.descricao = item.descricao
         }
       })
