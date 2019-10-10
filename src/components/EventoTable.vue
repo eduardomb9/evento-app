@@ -1,9 +1,13 @@
 <style>
+#espaco {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 </style>
 
 <template>
   <div id="eventoTable" class="container">
-    <v-simple-table>
+    <v-simple-table dark fixed-header height="288px">
       <thead>
         <th>Id</th>
         <th>Nome</th>
@@ -17,9 +21,9 @@
             <span v-else>{{ data }}</span>
           </td>
           <td>
-            <button type="button" @click="remover(val.id)"><v-icon color="primary">mdi-delete</v-icon></button>
-            <button type="button" @click="editar(val)"><v-icon color="primary">mdi-pencil</v-icon></button>
-            <button type="button" @click="$emit('add-participante', val)"><v-icon color="primary">mdi-plus</v-icon></button>
+            <button type="button" @click="remover(val.id)"><v-icon color="dark">mdi-delete</v-icon></button>
+            <button type="button" @click="editar(val)"><v-icon color="dark">mdi-pencil</v-icon></button>
+            <button type="button" @click="$emit('add-participante', val)"><v-icon color="dark">mdi-plus</v-icon></button>
           </td>
         </tr>
       </tbody>
@@ -29,10 +33,15 @@
       {{ msg }}
     </v-snackbar>
 
-    <v-form ref="form">
-      <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-      <v-select :items="tiposEventos" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+    <v-divider id="espaco" />
+
+    <v-form class="container" ref="form">
+      <h2> Cadastrar Evento </h2>
+      <div class="row col-8">
+      <v-text-field class="col-6" :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
+      <v-select class="col-6" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
       </v-select>
+      </div>
       <div style="float: right">
         <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
         <v-btn v-else @click="salvar">Salvar</v-btn>
