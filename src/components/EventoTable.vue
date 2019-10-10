@@ -104,7 +104,7 @@ export default {
         this.messages.push('Evento removido com sucesso.')
         this.snackbar = true
       }).catch(e => {
-        this.messages.push('Erro ao remover um evento. Verifique se o evento têm participantes associados.')
+        this.messages.push('Erro ao remover o evento. Verifique se o evento têm participantes associados.')
         this.snackbar = true
       })
       this.dialogConfirm = false

@@ -1,26 +1,40 @@
+<style>
+#espaco {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+</style>
 <template>
-    <div id="participante-table">
+    <div id="participante-table" class="container">
         <v-data-table
         :headers="headers"
         :items="participantes"
         :items-per-page="5"
         class="elevation-1"
+        dark fixed-header height="288px"
         >
             <template v-slot:item.acao="{ item }">
-                <button type="button" @click="deletar(item.id)"><v-icon color="primary">mdi-delete</v-icon></button>
-                <button type="button" @click="editar(item)"><v-icon color="primary">mdi-pencil</v-icon></button>
+                <button type="button" @click="deletar(item.id)"><v-icon color="dark">mdi-delete</v-icon></button>
+                <button type="button" @click="editar(item)"><v-icon color="dark">mdi-pencil</v-icon></button>
             </template>
         </v-data-table>
+
+        <v-divider id="espaco" />
+
+        <ParticipanteForm />
     </div>
 </template>
 
 <script lang="ts">
 
 import Participante from '../service/participantes'
-import participantes from '../service/participantes'
+import ParticipanteForm from './ParticipanteForm'
 
 export default {
     name: 'participante-table',
+    components: {
+        ParticipanteForm,
+    },
     data: function () {
         return {
             headers: [

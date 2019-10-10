@@ -16,7 +16,7 @@
 
 import EventoTable from './components/EventoTable'
 import ParticipanteTable from './components/ParticipanteTable'
-import ParticipanteForm from './components/ParticipanteForm2'
+import ParticipanteForm from './components/ParticipanteDialog'
 
 import Evento from './service/eventos'
 
