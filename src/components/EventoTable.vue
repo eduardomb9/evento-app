@@ -126,22 +126,13 @@ export default {
         this.$emit('emitir-snackbar', this.messages)
       })
 
-      this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } };
-      this.editando = false;
-      this.desativado = false;
-      this.participantes = [];
-      this.$refs.form.resetValidation();
+      this.limpar()
     },
     cancelar: function() {
       this.evento.id = this.eventoCopia.id;
       this.evento.nome = this.eventoCopia.nome;
       this.evento.tipoEvento = this.eventoCopia.tipoEvento
-      this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } };
-      this.editando = false;
-      this.desativado = false;
-      this.participantes = [];
-      this.dialogConfirm = false
-      this.$refs.form.resetValidation();
+      this.limpar()
     },
     adicionar: function() {
       this.messages = []
@@ -156,6 +147,12 @@ export default {
           return
       }
 
+      if (!this.evento.tipoEvento.descricao) {
+        this.messages.push('Campo tipo de evento é obrigatorio.')
+        this.$emit('emitir-snackbar', this.messages)
+        return
+      }
+
       Evento.adicionar(this.evento)
       .then(response => {
         this.eventos.push(response.data)
@@ -166,8 +163,15 @@ export default {
       });
       
       this.$emit('emitir-snackbar', this.messages)
+      this.limpar()
+    },
+    limpar: function() {
       this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } }
-      this.$refs.form.resetValidation();
+      this.editando = false
+      this.desativado = false
+      this.participantes = []
+      this.dialogConfirm = false
+      this.$refs.form.resetValidation()
     },
     atualizarTextoTabela: function (id) {
       this.tiposEventos.forEach(item => {
