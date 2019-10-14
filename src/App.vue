@@ -11,7 +11,7 @@
     </v-snackbar>
 
     <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
-    <participante-form :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" />
+    <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
 
     </v-app>
 </template>
@@ -20,7 +20,7 @@
 
 import EventoTable from './components/EventoTable'
 import ParticipanteTable from './components/ParticipanteTable'
-import ParticipanteForm from './components/ParticipanteDialog'
+import ParticipanteDialog from './components/ParticipanteDialog'
 
 import Evento from './service/eventos'
 
@@ -29,7 +29,7 @@ export default {
   components: {
     'evento-table' : EventoTable,
     'participante-table': ParticipanteTable,
-    'participante-form' : ParticipanteForm,
+    'participante-dialog' : ParticipanteDialog,
   },
   data: function () {
       return {

@@ -8,10 +8,8 @@ h3 {
   <v-row justify="center">
     <v-dialog v-model="dialog2" scrollable max-width="300px">
       <v-card>
-        <v-card-title>{{ evento.nome }}</v-card-title>
-        <v-divider></v-divider>
         <h3>Novo Participante:</h3>
-        <v-card-text style="height: 300px;">
+        <v-card-text>
           <v-text-field required v-model="participante.nome"  placeholder="Nome"/>
         </v-card-text>
         <v-divider></v-divider>
@@ -28,7 +26,7 @@ import Evento from '../service/eventos'
 import Participante from '../service/participantes'
 
 export default {
-    name: 'ParticipanteForm',
+    name: 'ParticipanteDialog',
     props: {
       dialog: Boolean,
       evento: Object
@@ -56,6 +54,7 @@ export default {
       adicionar: function () {
         Evento.adicionarParticipante(this.evento.id, this.participante)
         .then(resp => {
+          this.$emit('emitir-snackbar', [`Participante ${this.participante.nome} adicionado ao evento ${this.evento.nome} com sucesso`])
           this.participanteId = ''
           this.participante = { id: '', nome: '' }
           this.dialog2 = false
