@@ -21,7 +21,7 @@
 
         <v-divider id="espaco" />
 
-        <ParticipanteForm />
+        <ParticipanteForm :participante="participanteEdit" :editando="mostraEditando" @finalizar-edicao="mostraEditando = false" />
     </div>
 </template>
 
@@ -44,6 +44,8 @@ export default {
             ],
             participantes: [
             ],
+            participanteEdit: { id: '', nome: '' },
+            mostraEditando: false,
         }
     },
     methods: {
@@ -57,7 +59,8 @@ export default {
             })
         },
         editar: function(participante) {
-            alert('Editar Participante: ' + participante.nome)
+            this.participanteEdit = participante
+            this.mostraEditando = true
         },
     },
     mounted: function () {
