@@ -6,7 +6,11 @@
       <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
     </v-tabs>
 
-    <component :is="principal" @add-participante="mostrarDialog" ></component>
+    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
+      {{ msg }}
+    </v-snackbar>
+
+    <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
     <participante-form :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" />
 
     </v-app>
@@ -37,7 +41,10 @@ export default {
         participantes: [
         ], 
         dialog: false,
-        eventoEdit: { id: '', nome: '' }
+        eventoEdit: { id: '', nome: '' },
+        messages: [],
+        timeout: 2000,
+        snackbar: false,
     }
   },
   methods: {
@@ -47,7 +54,11 @@ export default {
     },
     fechar: function () {
       this.dialog = false
-    }
+    },
+    mostraSnack: function (msgs) {
+      this.messages = msgs
+      this.snackbar = true
+    },
   }
 }
 </script>

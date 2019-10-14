@@ -21,7 +21,7 @@
 
         <v-divider id="espaco" />
 
-        <ParticipanteForm :participante="participanteEdit" :editando="mostraEditando" @finalizar-edicao="mostraEditando = false" />
+        <ParticipanteForm :participante="participanteEdit" :editando="mostraEditando" @finalizar-edicao="finalizaEdicao" />
     </div>
 </template>
 
@@ -53,6 +53,7 @@ export default {
             Participante.remover(id)
             .then(response => {
                 this.participantes = this.participantes.filter(val => val.id != id)
+                this.mostraMensagem(['Participante deletado com sucesso'])
             })
             .catch(e => {
                 alert(e)
@@ -61,6 +62,13 @@ export default {
         editar: function(participante) {
             this.participanteEdit = participante
             this.mostraEditando = true
+        },
+        finalizaEdicao: function () {
+            this.mostraEditando = false
+            this.mostraMensagem(['Participante editado com sucesso.'])
+        },
+        mostraMensagem: function (msgs) {
+            this.$emit('emitir-snackbar', msgs)
         },
     },
     mounted: function () {

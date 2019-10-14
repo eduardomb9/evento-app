@@ -29,10 +29,6 @@
       </tbody>
     </v-simple-table>
     
-    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
-      {{ msg }}
-    </v-snackbar>
-
     <v-divider id="espaco" />
 
     <v-form class="container" ref="form">
@@ -74,8 +70,6 @@ export default {
   data: function() {
     return {
       dialogConfirm: false,
-      snackbar: false,
-      timeout: 2000,
       desativado: false,
       editando: false,
       eventos: [],
@@ -102,11 +96,11 @@ export default {
       Evento.remover(id).then(resp => {
         this.eventos = this.eventos.filter(val => val.id !== id)
         this.messages.push('Evento removido com sucesso.')
-        this.snackbar = true
+        
       }).catch(e => {
         this.messages.push('Erro ao remover o evento. Verifique se o evento têm participantes associados.')
-        this.snackbar = true
       })
+      this.$emit('emitir-snackbar', this.messages)
       this.dialogConfirm = false
       this.eventoCopia.id = ''
     },
@@ -129,7 +123,7 @@ export default {
       Evento.editar(this.evento)
       .then(resp => {
         this.messages.push('Alteração realizada com sucesso.')
-        this.snackbar = true
+        this.$emit('emitir-snackbar', this.messages)
       })
 
       this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } };
@@ -154,11 +148,11 @@ export default {
 
       if (!this.evento.nome) {
           this.messages.push('Campo nome é obrigatorio.')
-          this.snackbar = true
+          this.$emit('emitir-snackbar', this.messages)
           return
       } else if (this.evento.nome.length < 3) {
           this.messages.push('Campo nome deve ser maior que 2.')
-          this.snackbar = true
+          this.$emit('emitir-snackbar', this.messages)
           return
       }
 
@@ -171,7 +165,7 @@ export default {
         this.messages.push('Erro geral contate administração!')
       });
       
-      this.snackbar = true
+      this.$emit('emitir-snackbar', this.messages)
       this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } }
       this.$refs.form.resetValidation();
     },

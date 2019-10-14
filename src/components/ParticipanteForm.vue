@@ -27,7 +27,7 @@ export default {
     methods: {
       salvar: function () {
         Participante.editar(this.participante).then(resp => {
-          this.$emit('finalizar-edicao')
+          this.$emit('finalizar-edicao', ['Participante editado com sucesso.'])
         })
       },
       cancelar: function () {
