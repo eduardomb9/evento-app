@@ -26,6 +26,8 @@ export default {
     return http.post(url + '/', {
       id: evento.id,
       nome: evento.nome,
+      inicio: evento.inicio,
+      fim: evento.fim,
       tipoEvento: {
         id : evento.tipoEvento.id,
         descricao: evento.tipoEvento.descricao,

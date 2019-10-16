@@ -11,7 +11,9 @@
       <thead>
         <th>Id</th>
         <th>Nome</th>
-        <th>Tipo Evento</th>
+        <th>Data Inicio</th>
+        <th>Data Fim</th>
+        <th>Tipo Evento</th>  
         <th>Ações</th>
       </thead>
       <tbody>
@@ -33,15 +35,67 @@
 
     <v-form class="container" ref="form">
       <h2> Cadastrar Evento </h2>
-      <div class="row col-8">
-      <v-text-field class="col-6" :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-      <v-select class="col-6" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
-      </v-select>
-      </div>
-      <div style="float: right">
-        <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
-        <v-btn v-else @click="salvar">Salvar</v-btn>
-        <v-btn v-show="editando" @click="cancelar">Cancelar</v-btn>
+      <div class="row">
+        <div class="col-6">
+          <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
+          <v-select :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+          </v-select>
+          <div class="float-right">
+            <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
+            <v-btn v-else @click="salvar">Salvar</v-btn>
+            <v-btn v-show="editando" @click="cancelar">Cancelar</v-btn>
+          </div>
+        </div>
+        <div class="col-6">
+      <v-menu
+        ref="menuini"
+        v-model="menuini"
+        :close-on-content-click="false"
+        :return-value.sync="evento.inicio"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+        >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="evento.inicio"
+            label="Inicio do Evento"
+            readonly
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker v-model="evento.inicio" no-title scrollable>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="menuini = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="$refs.menuini.save(evento.inicio)">OK</v-btn>
+        </v-date-picker>
+      </v-menu>
+      <v-menu
+        ref="menufim"
+        v-model="menufim"
+        :close-on-content-click="false"
+        :return-value.sync="evento.fim"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+        >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="evento.fim"
+            label="Fim do Evento"
+            readonly
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker v-model="evento.fim" no-title scrollable>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="menufim = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="$refs.menufim.save(evento.fim)">OK</v-btn>
+        </v-date-picker>
+      </v-menu>
+          <!-- <v-date-picker v-model="evento.inicio"></v-date-picker>
+          <v-date-picker v-model="evento.fim"></v-date-picker> -->
+        </div>
       </div>
     </v-form>
 
@@ -72,10 +126,12 @@ export default {
       dialogConfirm: false,
       desativado: false,
       editando: false,
+      menuini: false,
+      menufim: false,
       eventos: [],
       tiposEventos: [],
-      eventoCopia: { id: '', nome: '', tipoEvento: { id: '', descricao: '' } },
-      evento: { id: '', nome: '', tipoEvento: { id: '', descricao: '' } },
+      eventoCopia: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } },
+      evento: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } },
       participantes: [],
       messages: [],
       regras: {
@@ -83,7 +139,7 @@ export default {
           value => !!value || "Campo obrigatorio.",
           value => (value.length || "") >= 3 || "Mínimo de 3 caracteres."
         ]
-      }
+      },
     };
   },
   methods: {
@@ -114,6 +170,8 @@ export default {
       this.eventoCopia.id = evento.id;
       this.eventoCopia.nome = evento.nome;
       this.eventoCopia.tipoEvento = evento.tipoEvento
+      this.eventoCopia.inicio = evento.inicio
+      this.eventoCopia.fim = evento.fim
       this.evento = evento;
       this.editando = true;
       this.desativado = true;
@@ -166,7 +224,7 @@ export default {
       this.limpar()
     },
     limpar: function() {
-      this.evento = { id: '', nome: '', tipoEvento: { id: '', descricao: '' } }
+      this.evento = { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } }
       this.editando = false
       this.desativado = false
       this.participantes = []
