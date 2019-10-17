@@ -21,6 +21,8 @@
         <tr v-for="val in eventos" :key="val.id">
           <td v-for="(data, i) in val" :key="i">
             <span v-if="i.toString().includes('tipo')">{{ data.descricao }}</span>
+            <span v-else-if="i.toString().includes('inicio')">{{ data | formatarData }}</span>
+            <span v-else-if="i.toString().includes('fim')">{{ data | formatarData }}</span>
             <span v-else>{{ data }}</span>
           </td>
           <td>
@@ -65,7 +67,7 @@
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker v-model="evento.inicio" no-title scrollable>
+        <v-date-picker v-model="evento.inicio" no-title scrollable locale="pt-br">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menuini = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menuini.save(evento.inicio)">OK</v-btn>
@@ -238,6 +240,13 @@ export default {
           this.evento.tipoEvento.descricao = item.descricao
         }
       })
+    },
+  },
+  filters: {
+    formatarData: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.split('-').reverse().join('/')
     },
   },
   mounted: function() {

@@ -63,9 +63,11 @@ export default {
             this.participanteEdit = participante
             this.mostraEditando = true
         },
-        finalizaEdicao: function () {
+        finalizaEdicao: function (msg) {
             this.mostraEditando = false
-            this.mostraMensagem(['Participante editado com sucesso.'])
+            if (msg) {
+                this.mostraMensagem(msg)
+            }
         },
         mostraMensagem: function (msgs) {
             this.$emit('emitir-snackbar', msgs)
