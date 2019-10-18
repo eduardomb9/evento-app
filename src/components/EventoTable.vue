@@ -50,7 +50,8 @@
           </div>
         </div>
         <div class="col-6">
-      <v-menu
+      <datetime type="datetime" v-model="evento.inicio"></datetime>
+      <!-- <v-menu
         ref="menuini"
         v-model="menuini"
         :close-on-content-click="false"
@@ -73,8 +74,9 @@
           <v-btn text color="primary" @click="menuini = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menuini.save(evento.inicio)">OK</v-btn>
         </v-date-picker>
-      </v-menu>
-      <v-menu
+      </v-menu> -->
+      <datetime type="datetime" v-model="evento.fim"></datetime>
+      <!-- <v-menu
         ref="menufim"
         v-model="menufim"
         :close-on-content-click="false"
@@ -97,7 +99,7 @@
           <v-btn text color="primary" @click="menufim = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menufim.save(evento.fim)">OK</v-btn>
         </v-date-picker>
-      </v-menu>
+      </v-menu> -->
           <!-- <v-date-picker v-model="evento.inicio"></v-date-picker>
           <v-date-picker v-model="evento.fim"></v-date-picker> -->
         </div>
@@ -105,6 +107,7 @@
     </v-form>
 
     <DialogConfirm :dialog="dialogConfirm" @confirm="excluir" @cancel="cancelar" />
+    
     <ParticipantesList v-show="!!participantes.length" :participantes="participantes" />
 
   </div>
