@@ -65,6 +65,7 @@
             label="Inicio do Evento"
             readonly
             v-on="on"
+            clearable
           ></v-text-field>
         </template>
         <v-date-picker v-model="evento.inicio" no-title scrollable locale="pt-br">
@@ -87,10 +88,11 @@
             v-model="evento.fim"
             label="Fim do Evento"
             readonly
+            clearable
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker v-model="evento.fim" no-title scrollable>
+        <v-date-picker v-model="evento.fim" no-title scrollable locale="pt-br">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menufim = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menufim.save(evento.fim)">OK</v-btn>
