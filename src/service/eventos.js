@@ -23,6 +23,12 @@ export default {
 
   adicionar: (evento) => {
     let resultado = {}
+
+    evento.inicio = evento.inicio.replace('.000', '')
+    evento.inicio = evento.inicio.replace('-03:00', '')
+    evento.fim = evento.fim.replace('.000', '')
+    evento.fim = evento.fim.replace('-03:00', '')
+
     return http.post(url + '/', {
       id: evento.id,
       nome: evento.nome,
@@ -40,6 +46,11 @@ export default {
   },
 
   editar:  (evento) => {
+    evento.inicio = evento.inicio.replace('.000', '')
+    evento.inicio = evento.inicio.replace('-03:00', '')
+    evento.fim = evento.fim.replace('.000', '')
+    evento.fim = evento.fim.replace('-03:00', '')
+
     return http.put(url + '/' + evento.id, evento)
   }
 

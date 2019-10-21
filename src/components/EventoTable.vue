@@ -4,6 +4,12 @@
   margin-bottom: 40px;
   /* comentario adicionado */
 }
+.vdatetime-input {
+  width: 100%;
+  height: 32px;
+  margin-top: 17px;
+  border-bottom: 1px solid gray;
+}
 </style>
 
 <template>
@@ -50,58 +56,23 @@
           </div>
         </div>
         <div class="col-6">
-      <datetime type="datetime" v-model="evento.inicio"></datetime>
-      <!-- <v-menu
-        ref="menuini"
-        v-model="menuini"
-        :close-on-content-click="false"
-        :return-value.sync="evento.inicio"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-        >
-        <template v-slot:activator="{ on }">
-          <v-text-field
+          <datetime 
+            placeholder="Data/Hora do Inicio do Evento"
+            type="datetime"
             v-model="evento.inicio"
-            label="Inicio do Evento"
-            readonly
-            v-on="on"
-            clearable
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="evento.inicio" no-title scrollable locale="pt-br">
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menuini = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.menuini.save(evento.inicio)">OK</v-btn>
-        </v-date-picker>
-      </v-menu> -->
-      <datetime type="datetime" v-model="evento.fim"></datetime>
-      <!-- <v-menu
-        ref="menufim"
-        v-model="menufim"
-        :close-on-content-click="false"
-        :return-value.sync="evento.fim"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-        >
-        <template v-slot:activator="{ on }">
-          <v-text-field
+            format="dd/MM/yyyy HH:mm:ss"
+            value-zone="America/Fortaleza"
+            label="Inicio do Evento">
+          </datetime>
+          <datetime 
+            placeholder="Data/Hora do Fim do Evento"
+            type="datetime"
             v-model="evento.fim"
-            label="Fim do Evento"
-            readonly
-            clearable
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="evento.fim" no-title scrollable locale="pt-br">
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menufim = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.menufim.save(evento.fim)">OK</v-btn>
-        </v-date-picker>
-      </v-menu> -->
-          <!-- <v-date-picker v-model="evento.inicio"></v-date-picker>
-          <v-date-picker v-model="evento.fim"></v-date-picker> -->
+            format="dd/MM/yyyy HH:mm:ss"
+            value-zone="America/Fortaleza"
+            style="margin-top: 21px;"
+            label="Fim do Evento">
+          </datetime>
         </div>
       </div>
     </v-form>
@@ -251,7 +222,9 @@ export default {
     formatarData: function (value) {
       if (!value) return ''
       value = value.toString()
-      return value.split('-').reverse().join('/')
+      let data_hora = value.split('T')
+      data_hora[0] = data_hora[0].split('-').reverse().join('/')
+      return data_hora[0] + ' ' + data_hora[1]
     },
   },
   mounted: function() {
