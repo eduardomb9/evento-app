@@ -166,9 +166,11 @@ export default {
       this.limpar()
     },
     cancelar: function() {
-      this.evento.id = this.eventoCopia.id;
-      this.evento.nome = this.eventoCopia.nome;
+      this.evento.id = this.eventoCopia.id
+      this.evento.nome = this.eventoCopia.nome
       this.evento.tipoEvento = this.eventoCopia.tipoEvento
+      this.evento.inicio = this.eventoCopia.inicio
+      this.evento.fim = this.eventoCopia.fim
       this.limpar()
     },
     adicionar: function() {
