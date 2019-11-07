@@ -22,7 +22,7 @@ export default {
             let token = ''
             Auth.logar(this.user, this.password).then(response => {
                 if (response.data.token) {
-                    localStorage.token = response.data.token
+                    sessionStorage.token = response.data.token
                 }
                 this.cancelar()
                 window.location.reload()

@@ -50,7 +50,7 @@ export default {
         messages: [],
         timeout: 2000,
         snackbar: false,
-        token: localStorage.getItem('token'),
+        token: sessionStorage.getItem('token'),
     }
   },
   methods: {
@@ -66,7 +66,7 @@ export default {
       this.snackbar = true
     },
     resetToken: function () {
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       window.location.reload()
     },
   }
