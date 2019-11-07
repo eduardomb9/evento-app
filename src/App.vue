@@ -1,26 +1,31 @@
 <template>
     <v-app>
+    <div v-if="token">
+      <v-tabs dark>
+        <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
+        <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
+        <v-tab @click="resetToken()">Logout</v-tab>
+      </v-tabs>
 
-    <v-tabs dark>
-      <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
-      <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
-    </v-tabs>
+      <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
+        {{ msg }}
+      </v-snackbar>
 
-    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
-      {{ msg }}
-    </v-snackbar>
-
-    <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
-    <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
-
+      <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
+      <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
+    </div>
+    <div v-else>
+      <login></login>
+    </div>
     </v-app>
 </template>
 
 <script>
-
+import { http } from './service/config'
 import EventoTable from './components/EventoTable'
 import ParticipanteTable from './components/ParticipanteTable'
 import ParticipanteDialog from './components/ParticipanteDialog'
+import Login from './components/Login'
 
 import Evento from './service/eventos'
 
@@ -30,6 +35,7 @@ export default {
     'evento-table' : EventoTable,
     'participante-table': ParticipanteTable,
     'participante-dialog' : ParticipanteDialog,
+    'login' : Login,
   },
   data: function () {
       return {
@@ -45,6 +51,7 @@ export default {
         messages: [],
         timeout: 2000,
         snackbar: false,
+        token: localStorage.getItem('token'),
     }
   },
   methods: {
@@ -58,6 +65,10 @@ export default {
     mostraSnack: function (msgs) {
       this.messages = msgs
       this.snackbar = true
+    },
+    resetToken: function () {
+      localStorage.removeItem('token')
+      window.location.reload()
     },
   }
 }
