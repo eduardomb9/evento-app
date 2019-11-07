@@ -7,7 +7,7 @@
       <v-tabs dark>
         <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
         <v-tab @click="principal = 'participante-table'">Participantes</v-tab>
-        <v-tab @click="resetToken()">Logout</v-tab>
+        <v-tab @click="resetToken()" class="float-right"><v-icon color="dark">mdi-power</v-icon></v-tab>
       </v-tabs>
 
       <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
