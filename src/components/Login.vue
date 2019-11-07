@@ -14,6 +14,7 @@ export default {
         return {
             user: '',
             password: '',
+            messages: [],
         }
     },
     methods: {
@@ -25,11 +26,15 @@ export default {
                 }
                 this.cancelar()
                 window.location.reload()
+            }).catch(error => {
+                this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
+                this.$emit('emitir-snackbar', this.messages)
             })
         },
         cancelar: function() {
             this.user = ''
             this.password = ''
+            this.messages = []
         },
     },
 }

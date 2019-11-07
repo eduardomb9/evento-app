@@ -1,5 +1,8 @@
 <template>
     <v-app>
+    <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
+      {{ msg }}
+    </v-snackbar>
     <div v-if="token">
       <v-tabs dark>
         <v-tab @click="principal = 'evento-table'">Eventos</v-tab>
@@ -7,15 +10,11 @@
         <v-tab @click="resetToken()">Logout</v-tab>
       </v-tabs>
 
-      <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
-        {{ msg }}
-      </v-snackbar>
-
       <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
       <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
     </div>
     <div v-else>
-      <login></login>
+      <login @emitir-snackbar="mostraSnack"></login>
     </div>
     </v-app>
 </template>
