@@ -81,6 +81,7 @@ export default {
                 this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
                 this.$emit('emitir-snackbar', this.messages)
                 this.password = ''
+                this.focusPassword()
             })
         },
         cancelar: function() {
@@ -91,14 +92,6 @@ export default {
         focusPassword: function() {
           this.$refs.password.focus()
         },
-    },
-    directives: {
-      focus: {
-        // definição da diretiva
-        inserted: function (el) {
-          el.focus()
-        }
-      },
     },
 }
 </script>
