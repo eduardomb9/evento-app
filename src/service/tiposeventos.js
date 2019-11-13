@@ -1,6 +1,5 @@
 import { http } from './config'
 
-
 const url = 'api/tipo_evento'
 
 export default {
@@ -17,12 +16,11 @@ export default {
     return http.get(url + '/' + idEvento + '/participante')
   },
 
-  adicionarParticipante: (idEvento, participante ) => {
+  adicionarParticipante: (idEvento, participante) => {
     return http.post(url + '/' + idEvento + '/participante', participante)
   },
 
   adicionar: (evento) => {
-    let resultado = {}
     return http.post(url + '/', {
       id: evento.id,
       nome: evento.nome
@@ -33,7 +31,7 @@ export default {
     return http.delete(url + '/' + id)
   },
 
-  editar:  (evento) => {
+  editar: (evento) => {
     return http.put(url + '/' + evento.id, evento)
   }
 

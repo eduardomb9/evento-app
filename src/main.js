@@ -3,6 +3,7 @@ import App from './App.vue'
 import Datetime from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import vuetify from './plugins/vuetify'
+import router from './router'
 
 Vue.use(Datetime)
 
@@ -10,5 +11,6 @@ Vue.config.productionTip = false
 
 new Vue({
   vuetify,
+  router,
   render: h => h(App)
 }).$mount('#app')

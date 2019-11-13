@@ -22,8 +22,6 @@ export default {
   },
 
   adicionar: (evento) => {
-    let resultado = {}
-
     evento.inicio = evento.inicio.replace('.000-03:00', '')
     evento.fim = evento.fim.replace('.000-03:00', '')
 
@@ -33,9 +31,9 @@ export default {
       inicio: evento.inicio,
       fim: evento.fim,
       tipoEvento: {
-        id : evento.tipoEvento.id,
-        descricao: evento.tipoEvento.descricao,
-      },
+        id: evento.tipoEvento.id,
+        descricao: evento.tipoEvento.descricao
+      }
     })
   },
 
@@ -43,7 +41,7 @@ export default {
     return http.delete(url + '/' + id)
   },
 
-  editar:  (evento) => {
+  editar: (evento) => {
     evento.inicio = evento.inicio.replace('.000-03:00', '')
     evento.fim = evento.fim.replace('.000-03:00', '')
 

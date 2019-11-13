@@ -76,7 +76,7 @@ export default {
                     sessionStorage.token = response.data.token
                 }
                 this.cancelar()
-                window.location.reload()
+                this.$router.push('/home')
             }).catch(error => {
                 this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
                 this.$emit('emitir-snackbar', this.messages)
