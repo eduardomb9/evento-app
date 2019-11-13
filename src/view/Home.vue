@@ -1,8 +1,5 @@
 <template>
     <div id="home">
-      <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
-          {{ msg }}
-      </v-snackbar>
       <div v-if="token">
           <component :is="principal" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></component>
           <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
@@ -40,7 +37,6 @@ export default {
         eventoEdit: { id: '', nome: '' },
         messages: [],
         timeout: 2000,
-        snackbar: false,
         token: sessionStorage.getItem('token'),
     }
   },
@@ -53,8 +49,9 @@ export default {
       this.dialog = false
     },
     mostraSnack: function (msgs) {
+      console.log(msgs)
       this.messages = msgs
-      this.snackbar = true
+      this.$emit('emitir-snackbar', this.messages)
     },
     resetToken: function () {
       sessionStorage.removeItem('token')

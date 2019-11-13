@@ -1,8 +1,12 @@
 <template>
     <v-app>
+      <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
+          {{ msg }}
+      </v-snackbar>
+
       <HeaderNav v-if="$router.currentRoute.name != 'login'" />
 
-      <router-view />
+      <router-view @emitir-snackbar="mostrarSnack" />
     </v-app>
 </template>
 
@@ -12,7 +16,18 @@ import HeaderNav from "./components/HeaderNav";
 export default {
   components: {
     HeaderNav
+  },
+  data: function() {
+    return {
+      messages: [],
+      snackbar: false
+    }
+  },
+  methods: {
+    mostrarSnack: function (msgs) {
+      this.messages = msgs
+      this.snackbar = true
+    },
   }
-  
 }
 </script>
