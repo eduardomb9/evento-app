@@ -20,7 +20,8 @@ export default {
   data: function() {
     return {
       messages: [],
-      snackbar: false
+      snackbar: false,
+      timeout: 5000,
     }
   },
   methods: {

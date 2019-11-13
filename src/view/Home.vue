@@ -36,7 +36,6 @@ export default {
         dialog: false,
         eventoEdit: { id: '', nome: '' },
         messages: [],
-        timeout: 2000,
         token: sessionStorage.getItem('token'),
     }
   },
