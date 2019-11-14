@@ -1,3 +1,9 @@
+<style scoped>
+#divisor {
+  margin-bottom: 3%;
+}
+</style>
+
 <template>
     <v-app>
       <v-snackbar :timeout="timeout" v-model="snackbar" v-for="(msg, index) in messages" :key="index" top>
@@ -5,6 +11,8 @@
       </v-snackbar>
 
       <HeaderNav v-if="$router.currentRoute.name != 'login'" />
+      
+      <v-divider id="divisor" />
 
       <router-view @emitir-snackbar="mostrarSnack" />
     </v-app>
