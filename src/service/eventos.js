@@ -42,9 +42,12 @@ export default {
   },
 
   editar: (evento) => {
-    evento.inicio = evento.inicio.replace('.000-03:00', '')
-    evento.fim = evento.fim.replace('.000-03:00', '')
-
+    if (evento.inicio) {
+      evento.inicio = evento.inicio.replace('.000-03:00', '')
+    }
+    if (evento.fim) {
+      evento.fim = evento.fim.replace('.000-03:00', '')
+    }
     return http.put(url + '/' + evento.id, evento)
   }
 

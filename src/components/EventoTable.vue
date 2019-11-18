@@ -43,7 +43,8 @@
     <v-divider id="espaco" />
 
     <v-form class="container" ref="form">
-      <h2> Cadastrar Evento </h2>
+      <h2 v-if="!editando"> Cadastrar Evento </h2>
+      <h2 v-else> Editar Evento </h2>
       <div class="row">
         <div class="col-6">
           <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />

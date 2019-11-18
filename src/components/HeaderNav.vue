@@ -16,11 +16,11 @@
 
 <script>
 export default {
-    methods: {
-        resetToken: function () {
-        sessionStorage.removeItem('token')
-        this.$router.push('/').catch(err => {})
-        },
-    }
+  methods: {
+    resetToken: function () {
+      sessionStorage.removeItem('token')
+      this.$router.push('/').catch(err => {})
+    },
+  }
 }
 </script>
