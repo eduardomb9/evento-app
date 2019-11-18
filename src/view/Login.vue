@@ -30,7 +30,7 @@
                         autofocus
                         label="Usuário"
                         name="usuario"
-                        prepend-icon="mdi-login"
+                        prepend-icon="mdi-account"
                         type="text"
                         v-model="user"
                         @keyup.enter="focusPassword"
