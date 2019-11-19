@@ -48,8 +48,8 @@
       <div class="row">
         <div class="col-6">
           <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-          <v-select :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
-          </v-select>
+          <v-autocomplete :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+          </v-autocomplete>
           <div class="float-right">
             <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
             <v-btn v-else @click="salvar">Salvar</v-btn>
