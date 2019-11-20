@@ -30,35 +30,45 @@ export default {
             }
             const printar = dado => console.log('Aqui está o dado: ' + dado)
             
-            fetchData(70, printar)
+            // fetchData(70, printar)
             
             // PROMISES
             const val = 10
-            const fetchData2 = val => new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    if (Math.random() < 0.1) {
-                        reject("Erro ao obter valor")
+            const fetchData2 = vl => new Promise((resolve, reject) => {
+                let participante = { id: '', nome: '' }
+                Participante.obterPorId(vl).then(response => {
+                    participante = response.data
+                    if (!participante.nome) {
+                        reject("Erro ao obter participante")
                     } else {
-                        resolve(val + 10)
+                        resolve(participante.nome)
                     }
-                }, 500)
+                })
             })
             
-            fetchData2(20).then(retorno => printar(retorno)).catch(err => {
-                console.log('Erro 1: ' + err)
-            })
+            // fetchData2(20).then(retorno => printar(retorno)).catch(err => {
+            //     console.log('Erro 1: ' + err)
+            // })
 
             // ASYNC AWAIT
-            const ret = async (val) => {
+            const obterNomesParticipanteEProxPorId = async (val) => {
                 try {
                     const asd = await fetchData2(val)
-                    printar(asd)
+                    const asd2 = await fetchData2(val + 1)
+                    return (asd + ', ' + asd2)
                 } catch (error) {
                     console.log('Erro async/await: ' + error)
                 }
             }
 
-            ret(18)
+            console.log('OLAOLA1')
+            
+            obterNomesParticipanteEProxPorId(160)
+            .then(retorno => {
+                console.log(retorno)
+            })
+            
+            console.log('OLAOLA2')
         },
     }
 }
