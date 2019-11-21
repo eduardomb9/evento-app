@@ -2,21 +2,21 @@
     <v-container id="promessa">
         <h2>Tentando estudar promises.</h2>
         <v-form>
-            <v-text-field v-model="nomeParticipante" label="Participante" />
+            <v-text-field v-model="idParticipante" label="Participante" />
             <span>{{ nomeParticipante }}</span><br>
-            <v-btn @click="hello()">Olá</v-btn>
+            <v-btn @click="hello()">Obter Participante</v-btn>
         </v-form>
     </v-container>
 </template>
 
 <script>
 import Participante from '../service/participantes'
-import { async } from 'q'
 
 export default {
     data: function() {
         return {
-            nomeParticipante: 'init'
+            nomeParticipante: 'init',
+            idParticipante: 1
         }
     },
     methods: {
@@ -63,8 +63,7 @@ export default {
 
             console.log('OLAOLA1')
             
-            obterNomesParticipanteEProxPorId(160)
-            .then(retorno => {
+            obterNomesParticipanteEProxPorId(Number.parseInt(this.idParticipante)).then(retorno => {
                 console.log(retorno)
             })
             

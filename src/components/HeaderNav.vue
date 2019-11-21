@@ -7,9 +7,6 @@
       <v-tab @click="$router.push('/participantes').catch(err => {})">
         Participantes
       </v-tab>
-      <v-tab @click="$router.push('/promises').catch(err => {})">
-        Estudando Promises
-      </v-tab>
       <v-tab right @click="resetToken()">
         <v-icon color="dark">mdi-power</v-icon>
       </v-tab>
