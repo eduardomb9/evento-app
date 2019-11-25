@@ -37,6 +37,6 @@ export default {
       this.messages = msgs
       this.snackbar = true
     },
-  }
+  },
 }
 </script>
