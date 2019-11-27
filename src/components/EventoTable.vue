@@ -20,6 +20,8 @@
         <th>Nome</th>
         <th>Data Inicio</th>
         <th>Data Fim</th>
+        <th>Lat</th>
+        <th>Long</th>
         <th>Tipo Evento</th>  
         <th>Ações</th>
       </thead>
@@ -94,7 +96,9 @@ import { isNullOrUndefined } from "util";
 
 export default {
   name: "EventoTable",
-  props: {},
+  props: {
+    coordenadas: Array
+  },
   components: {
     ParticipantesList,
     DialogConfirm
@@ -103,6 +107,7 @@ export default {
   },
   data: function() {
     return {
+      coordenadasCopia: [],
       dialogConfirm: false,
       desativado: false,
       editando: false,
@@ -110,8 +115,8 @@ export default {
       menufim: false,
       eventos: [],
       tiposEventos: [],
-      eventoCopia: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } },
-      evento: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } },
+      eventoCopia: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' }, latitude: '', longitude: ''  },
+      evento: { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' }, latitude: '', longitude: '' },
       participantes: [],
       messages: [],
       regras: {
@@ -147,6 +152,8 @@ export default {
         }
       );
 
+      this.coordenadasCopia[0] = evento.latitude
+      this.coordenadasCopia[1] = evento.longitude
       this.eventoCopia.id = evento.id;
       this.eventoCopia.nome = evento.nome;
       this.eventoCopia.tipoEvento = evento.tipoEvento
@@ -167,6 +174,8 @@ export default {
       this.limpar()
     },
     cancelar: function() {
+      this.eventos.latitude = this.coordenadasCopia[0]
+      this.eventos.longitude = this.coordenadasCopia[1]
       this.evento.id = this.eventoCopia.id
       this.evento.nome = this.eventoCopia.nome
       this.evento.tipoEvento = this.eventoCopia.tipoEvento
@@ -193,6 +202,10 @@ export default {
         return
       }
 
+      this.evento.latitude = this.coordenadas[0]
+      this.evento.longitude = this.coordenadas[1]
+      console.log(this.evento.latitude, this.evento.longitude)
+
       Evento.adicionar(this.evento)
       .then(response => {
         this.eventos.push(response.data)
@@ -206,12 +219,13 @@ export default {
       this.limpar()
     },
     limpar: function() {
-      this.evento = { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' } }
+      this.evento = { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' }, latitude: '', longitude: ''  }
       this.editando = false
       this.desativado = false
       this.participantes = []
       this.dialogConfirm = false
       this.$refs.form.resetValidation()
+      this.$emit('limpar-coordenadas', [])
     },
     atualizarTextoTabela: function (id) {
       this.tiposEventos.forEach(item => {

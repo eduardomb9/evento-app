@@ -33,7 +33,9 @@ export default {
       tipoEvento: {
         id: evento.tipoEvento.id,
         descricao: evento.tipoEvento.descricao
-      }
+      },
+      latitude: evento.latitude,
+      longitude: evento.longitude,
     })
   },
 

@@ -1,17 +1,11 @@
-<style scoped>
-  #mapa { height: 280px; }
-</style>
-
 <template>
-    <div id="home">
-      <div v-if="token">
-          <evento-table @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
-          
-          <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
-      </div>
-      {{ coordenadas[0] }} , {{ coordenadas[1] }}
-      <div id="mapa"></div>
+  <div id="home">
+    <div v-if="token">
+      <evento-table @limpar-coordenadas="alterarCoordenadas" :coordenadas="coordenadas" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
+      <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
+      <mapa :coordenadasEdit="coordenadas" @alterar-coordenadas="alterarCoordenadas" />
     </div>
+  </div>
 </template>
 
 <script>
@@ -19,6 +13,7 @@ import { http } from '../service/config'
 import EventoTable from '../components/EventoTable'
 import ParticipanteTable from '../components/ParticipanteTable'
 import ParticipanteDialog from '../components/ParticipanteDialog'
+import Mapa from '../components/Mapa'
 import Evento from '../service/eventos'
 
 export default {
@@ -26,6 +21,7 @@ export default {
   components: {
     'evento-table' : EventoTable,
     'participante-dialog' : ParticipanteDialog,
+    'mapa' : Mapa,
   },
   data: function () {
       return {
@@ -40,8 +36,6 @@ export default {
         messages: [],
         token: sessionStorage.getItem('token'),
         coordenadas: [],
-        mapa: [],
-        layerGroup: []
     }
   },
   methods: {
@@ -56,30 +50,13 @@ export default {
       this.messages = msgs
       this.$emit('emitir-snackbar', this.messages)
     },
-    onMapClick: function (e) {
-      this.layerGroup.clearLayers()
-      if (this.coordenadas) {
-          this.coordenadas = []
-      }
-
-      this.coordenadas.push(e.latlng.lat)
-      this.coordenadas.push(e.latlng.lng)
-
-      var marcador = L.marker(this.coordenadas).addTo(this.layerGroup)
-    }
+    emitirCoordenadas: function(coordenadas) {
+      this.coordenadas = coordenadas
+    },
+    alterarCoordenadas: function(val) {
+      console.log(val)
+      this.coordenadas = val
+    },
   },
-  mounted () {
-    this.mapa = L.map('mapa').setView([-3.810239, -38.484828], 16);
-    this.mapa.on('click', this.onMapClick)
-
-    this.layerGroup = L.layerGroup().addTo(this.mapa)
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1IjoibWFyYW5oYW9lZHUiLCJhIjoiY2szZXE5bWJ1MDB3ejNucnUwN2JsNXBiZiJ9.gyB6TW6Q0qGZ54njdGoiCA'
-    }).addTo(this.mapa)
-  }
 }
 </script>
