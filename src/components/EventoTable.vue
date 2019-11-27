@@ -154,6 +154,7 @@ export default {
 
       this.coordenadasCopia[0] = evento.latitude
       this.coordenadasCopia[1] = evento.longitude
+      this.$emit('alterar-coordenadas', this.coordenadasCopia)
       this.eventoCopia.id = evento.id;
       this.eventoCopia.nome = evento.nome;
       this.eventoCopia.tipoEvento = evento.tipoEvento
@@ -165,17 +166,18 @@ export default {
       this.$refs.form.resetValidation();
     },
     salvar: function() {
+      this.evento.latitude = this.coordenadas[0]
+      this.evento.longitude = this.coordenadas[1]
       Evento.editar(this.evento)
       .then(resp => {
         this.messages.push('Alteração realizada com sucesso.')
         this.$emit('emitir-snackbar', this.messages)
       })
-
       this.limpar()
     },
     cancelar: function() {
-      this.eventos.latitude = this.coordenadasCopia[0]
-      this.eventos.longitude = this.coordenadasCopia[1]
+      this.evento.latitude = this.coordenadasCopia[0]
+      this.evento.longitude = this.coordenadasCopia[1]
       this.evento.id = this.eventoCopia.id
       this.evento.nome = this.eventoCopia.nome
       this.evento.tipoEvento = this.eventoCopia.tipoEvento
@@ -204,7 +206,6 @@ export default {
 
       this.evento.latitude = this.coordenadas[0]
       this.evento.longitude = this.coordenadas[1]
-      console.log(this.evento.latitude, this.evento.longitude)
 
       Evento.adicionar(this.evento)
       .then(response => {
@@ -225,7 +226,8 @@ export default {
       this.participantes = []
       this.dialogConfirm = false
       this.$refs.form.resetValidation()
-      this.$emit('limpar-coordenadas', [])
+      this.$emit('alterar-coordenadas', [])
+      this.$emit('limpar-marcadores')
     },
     atualizarTextoTabela: function (id) {
       this.tiposEventos.forEach(item => {

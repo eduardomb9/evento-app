@@ -4,7 +4,7 @@
 
 <template>
     <div>
-        {{ coordenadas2[0] }} , {{ coordenadas2[1] }}
+        {{ coordenadas }}
         <div id="mapa"></div>
         <v-btn @click="alterarCoordenadas([])">LIMPAR MAPA DE MARCADORES</v-btn>
     </div>
@@ -16,28 +16,20 @@ export default {
         coordenadasEdit: Array
     },
     computed: {
-        coordenadas2: { 
+        coordenadas: { 
             get: function () {
                 return this.coordenadasEdit
             },
             set: function(val) {
-                this.layerGroup.clearLayers()
-                if (this.val) {
-                    this.val = []
+                this.alterarCoordenadas(val)
+                if (!val) {
+                    this.layerGroup.clearLayers()
                 }
-
-                if (val.length > 0) {
-                    this.coordenadasEdit.push(val[0])
-                    this.coordenadasEdit.push(val[1])
-                    var marcador = L.marker(this.coordenadasEdit).addTo(this.layerGroup)
-                }
-                // var marcador = L.marker(this.coordenadasEdit).addTo(this.layerGroup)
             }
         }
     },
     data: function () {
         return {
-            coordenadas: [],
             mapa: [],
             layerGroup: []
         }
@@ -45,21 +37,16 @@ export default {
     methods: {
         onMapClick: function (e) {
             this.layerGroup.clearLayers()
-            if (this.coordenadas) {
-                this.coordenadas = []
-            }
-
-            this.coordenadas.push(e.latlng.lat)
-            this.coordenadas.push(e.latlng.lng)
-
-            var marcador = L.marker(this.coordenadas).addTo(this.layerGroup)
+            this.coordenadas.splice(0, this.coordenadas.length, e.latlng.lat, e.latlng.lng)
             this.alterarCoordenadas(this.coordenadas)
         },
         alterarCoordenadas: function(coordenadas) {
+            // rever alterar coordenada valor nao nulo
             this.layerGroup.clearLayers()
-            if (coordenadas.length > 0) {
+            if (coordenadas.length == 2) {
                 L.marker(coordenadas).addTo(this.layerGroup)
             }
+
             this.$emit('alterar-coordenadas', coordenadas)
         },
     },
@@ -68,7 +55,6 @@ export default {
         this.mapa.locate({setView: true, maxZoom: 16})
 
         this.mapa.on('click', this.onMapClick)
-
         this.layerGroup = L.layerGroup().addTo(this.mapa)
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {

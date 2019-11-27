@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div v-if="token">
-      <evento-table @limpar-coordenadas="alterarCoordenadas" :coordenadas="coordenadas" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
+      <evento-table :coordenadas="coordenadas" @alterar-coordenadas="alterarCoordenadas" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
       <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
       <mapa :coordenadasEdit="coordenadas" @alterar-coordenadas="alterarCoordenadas" />
     </div>
@@ -30,7 +30,7 @@ export default {
           formParticipante : 'participante-form',
         },
         participantes: [
-        ], 
+        ],
         dialog: false,
         eventoEdit: { id: '', nome: '' },
         messages: [],
@@ -50,12 +50,21 @@ export default {
       this.messages = msgs
       this.$emit('emitir-snackbar', this.messages)
     },
-    emitirCoordenadas: function(coordenadas) {
-      this.coordenadas = coordenadas
-    },
     alterarCoordenadas: function(val) {
-      console.log(val)
-      this.coordenadas = val
+      console.log(this.coordenadas + '-->' + val)
+      if (this.coordenadas.length == 0) {
+        if (val.length > 0) {
+          this.coordenadas.push(val[0], val[1])
+        }
+      } else {
+        if (this.coordenadas.length > 0) {
+          if (val.length > 0) {
+            this.coordenadas.splice(0, this.coordenadas.length, val[0], val[1])
+          } else {
+            this.coordenadas.splice(0, this.coordenadas.length)
+          }
+        }
+      }
     },
   },
 }
