@@ -227,7 +227,6 @@ export default {
       this.dialogConfirm = false
       this.$refs.form.resetValidation()
       this.$emit('alterar-coordenadas', [])
-      this.$emit('limpar-marcadores')
     },
     atualizarTextoTabela: function (id) {
       this.tiposEventos.forEach(item => {

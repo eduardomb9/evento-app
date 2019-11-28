@@ -51,7 +51,6 @@ export default {
       this.$emit('emitir-snackbar', this.messages)
     },
     alterarCoordenadas: function(val) {
-      console.log(this.coordenadas + '-->' + val)
       if (this.coordenadas.length == 0) {
         if (val.length > 0) {
           this.coordenadas.push(val[0], val[1])

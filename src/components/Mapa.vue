@@ -4,9 +4,7 @@
 
 <template>
     <div>
-        {{ coordenadas }}
         <div id="mapa"></div>
-        <v-btn @click="alterarCoordenadas([])">LIMPAR MAPA DE MARCADORES</v-btn>
     </div>
 </template>
 
@@ -22,32 +20,39 @@ export default {
             },
             set: function(val) {
                 this.alterarCoordenadas(val)
-                if (!val) {
-                    this.layerGroup.clearLayers()
-                }
+            }
+        }
+    },
+    watch: {
+        coordenadasEdit: function () {
+            if (this.marker) {
+                this.mapa.removeLayer(this.marker)
+            }
+            if (this.coordenadas.length == 2) {
+                this.marker = L.marker(this.coordenadas).addTo(this.mapa)
             }
         }
     },
     data: function () {
         return {
             mapa: [],
-            layerGroup: []
+            layerGroup: [],
+            marker: []
         }
     },
     methods: {
         onMapClick: function (e) {
-            this.layerGroup.clearLayers()
-            this.coordenadas.splice(0, this.coordenadas.length, e.latlng.lat, e.latlng.lng)
-            this.alterarCoordenadas(this.coordenadas)
+            this.alterarCoordenadas([e.latlng.lat, e.latlng.lng])
         },
-        alterarCoordenadas: function(coordenadas) {
+        alterarCoordenadas: function(coords) {
             // rever alterar coordenada valor nao nulo
-            this.layerGroup.clearLayers()
-            if (coordenadas.length == 2) {
-                L.marker(coordenadas).addTo(this.layerGroup)
+            this.$emit('alterar-coordenadas', coords)
+            if (this.marker) {
+                this.mapa.removeLayer(this.marker)
             }
-
-            this.$emit('alterar-coordenadas', coordenadas)
+            if (this.coordenadas.length == 2) {
+                this.marker = L.marker(this.coordenadas).addTo(this.mapa)
+            }
         },
     },
     mounted () {
@@ -55,7 +60,6 @@ export default {
         this.mapa.locate({setView: true, maxZoom: 16})
 
         this.mapa.on('click', this.onMapClick)
-        this.layerGroup = L.layerGroup().addTo(this.mapa)
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
