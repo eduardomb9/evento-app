@@ -5,7 +5,9 @@
 </style>
 
 <template>
-    <div id="mapa"></div>
+    <div class="container">
+        <div id="mapa"></div>
+    </div>
 </template>
 
 <script>
