@@ -10,6 +10,13 @@
   margin-top: 17px;
   border-bottom: 1px solid gray;
 }
+.overlay {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+}
 </style>
 
 <template>
@@ -50,7 +57,7 @@
       <div class="row">
         <div class="col-6">
           <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-          <v-autocomplete :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+          <v-autocomplete id="campoTipoEvento" class="overlay" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
           </v-autocomplete>
           <div class="float-right">
             <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>

@@ -1,12 +1,11 @@
 <style scoped>
-  #mapa { height: 280px; }
+  #mapa {
+    height: 280px;
+  }
 </style>
 
 <template>
-    <div class="container">
-        Localização do evento:
-        <div id="mapa"></div>
-    </div>
+    <div id="mapa"></div>
 </template>
 
 <script>
