@@ -3,7 +3,8 @@
 </style>
 
 <template>
-    <div>
+    <div class="container">
+        Localização do evento:
         <div id="mapa"></div>
     </div>
 </template>
@@ -57,7 +58,7 @@ export default {
     },
     mounted () {
         this.mapa = L.map('mapa').fitWorld();
-        this.mapa.locate({setView: true, maxZoom: 16})
+        this.mapa.locate({setView: true, maxZoom: 10})
 
         this.mapa.on('click', this.onMapClick)
 
