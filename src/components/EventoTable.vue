@@ -1,7 +1,7 @@
 <style>
 #espaco {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   /* comentario adicionado */
 }
 .vdatetime-input {
@@ -52,10 +52,13 @@
         </tr>
       </tbody>
     </v-simple-table>
-    
-    <v-divider id="espaco" />
+    <v-btn class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormulario = true">
+      <v-icon dark>mdi-plus</v-icon>
+    </v-btn>
 
-    <v-form class="container" ref="form">
+    <v-divider id="espaco" />
+    
+    <v-form v-show="mostraFormulario" class="container" ref="form">
       <h2 v-if="!editando"> Cadastrar Evento </h2>
       <h2 v-else> Editar Evento </h2>
       <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
@@ -81,7 +84,7 @@
       <div class="grupo-botoes">
         <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
         <v-btn v-else @click="salvar">Salvar</v-btn>
-        <v-btn v-show="editando" @click="cancelar">Cancelar</v-btn>
+        <v-btn @click="cancelar">Cancelar</v-btn>
       </div>
       <div style="display: block; clear: both"></div>
     </v-form>
@@ -131,6 +134,7 @@ export default {
           value => (value.length || "") >= 3 || "Mínimo de 3 caracteres."
         ]
       },
+      mostraFormulario: false
     };
   },
   methods: {
@@ -172,6 +176,7 @@ export default {
       this.eventoCopia.fim = evento.fim
       this.evento = evento;
       this.editando = true;
+      this.mostraFormulario = true
       this.desativado = true;
       this.$refs.form.resetValidation();
     },
@@ -235,6 +240,7 @@ export default {
       this.desativado = false
       this.participantes = []
       this.dialogConfirm = false
+      this.mostraFormulario = false
       this.$refs.form.resetValidation()
       this.$emit('alterar-coordenadas', [])
     },
