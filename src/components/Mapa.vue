@@ -31,7 +31,9 @@ export default {
                 this.mapa.removeLayer(this.marker)
             }
             if (this.coordenadas.length == 2) {
-                this.marker = L.marker(this.coordenadas).addTo(this.mapa)
+                if (this.coordenadas[0] != 0.0 && this.coordenadas[1] != 0.0) {
+                    this.marker = L.marker(this.coordenadas).addTo(this.mapa)
+                }
             }
         }
     },
@@ -53,7 +55,9 @@ export default {
                 this.mapa.removeLayer(this.marker)
             }
             if (this.coordenadas.length == 2) {
-                this.marker = L.marker(this.coordenadas).addTo(this.mapa)
+                if (this.coordenadas[0] != 0.0 && this.coordenadas[1] != 0.0) {
+                    this.marker = L.marker(this.coordenadas).addTo(this.mapa)
+                }
             }
         },
     },

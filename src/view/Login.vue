@@ -71,7 +71,7 @@ export default {
     methods: {
         logar: function () {
             let token = ''
-            Auth.logar(this.user, this.password).then(response => {
+            Auth.logar(this.user.trim(), this.password).then(response => {
                 if (response.data.token) {
                     sessionStorage.token = response.data.token
                 }
