@@ -17,6 +17,10 @@
   bottom: 0;
   z-index: 1000;
 }
+.grupo-botoes {
+  float: right;
+  margin-top: 20px;
+}
 </style>
 
 <template>
@@ -54,37 +58,32 @@
     <v-form class="container" ref="form">
       <h2 v-if="!editando"> Cadastrar Evento </h2>
       <h2 v-else> Editar Evento </h2>
-      <div class="row">
-        <div class="col-6">
-          <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-          <v-autocomplete id="campoTipoEvento" class="overlay" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
-          </v-autocomplete>
-          <div class="float-right">
-            <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
-            <v-btn v-else @click="salvar">Salvar</v-btn>
-            <v-btn v-show="editando" @click="cancelar">Cancelar</v-btn>
-          </div>
-        </div>
-        <div class="col-6">
-          <datetime 
-            placeholder="Data/Hora do Inicio do Evento"
-            type="datetime"
-            v-model="evento.inicio"
-            format="dd/MM/yyyy HH:mm:ss"
-            value-zone="America/Fortaleza"
-            label="Inicio do Evento">
-          </datetime>
-          <datetime 
-            placeholder="Data/Hora do Fim do Evento"
-            type="datetime"
-            v-model="evento.fim"
-            format="dd/MM/yyyy HH:mm:ss"
-            value-zone="America/Fortaleza"
-            style="margin-top: 21px;"
-            label="Fim do Evento">
-          </datetime>
-        </div>
+      <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
+      <v-autocomplete id="campoTipoEvento" class="overlay" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+      </v-autocomplete>
+      <datetime 
+        placeholder="Data/Hora do Inicio do Evento"
+        type="datetime"
+        v-model="evento.inicio"
+        format="dd/MM/yyyy HH:mm:ss"
+        value-zone="America/Fortaleza"
+        label="Inicio do Evento">
+      </datetime>
+      <datetime 
+        placeholder="Data/Hora do Fim do Evento"
+        type="datetime"
+        v-model="evento.fim"
+        format="dd/MM/yyyy HH:mm:ss"
+        value-zone="America/Fortaleza"
+        style="margin-top: 21px;"
+        label="Fim do Evento">
+      </datetime>
+      <div class="grupo-botoes">
+        <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
+        <v-btn v-else @click="salvar">Salvar</v-btn>
+        <v-btn v-show="editando" @click="cancelar">Cancelar</v-btn>
       </div>
+      <div style="display: block; clear: both"></div>
     </v-form>
 
     <DialogConfirm :dialog="dialogConfirm" @confirm="excluir" @cancel="cancelar" />
@@ -161,6 +160,10 @@ export default {
 
       this.coordenadasCopia[0] = evento.latitude
       this.coordenadasCopia[1] = evento.longitude
+      if (this.coordenadasCopia[0] == null) {
+        this.coordenadasCopia[0] = ''
+        this.coordenadasCopia[1] = ''
+      }
       this.$emit('alterar-coordenadas', this.coordenadasCopia)
       this.eventoCopia.id = evento.id;
       this.eventoCopia.nome = evento.nome;
