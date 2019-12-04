@@ -62,7 +62,7 @@
       <h2 v-if="!editando"> Cadastrar Evento </h2>
       <h2 v-else> Editar Evento </h2>
       <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
-      <v-autocomplete id="campoTipoEvento" class="overlay" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
+      <v-autocomplete id="campoTipoEvento" :items="tiposEventos" placeholder="Tipo do Evento" v-model="evento.tipoEvento.id" item-text="descricao" item-value="id" @change="atualizarTextoTabela(evento.tipoEvento.id)">
       </v-autocomplete>
       <datetime 
         placeholder="Data/Hora do Inicio do Evento"
@@ -82,6 +82,7 @@
         label="Fim do Evento">
       </datetime>
       <div class="grupo-botoes">
+        <v-btn @click="$emit('dialog-map', true)"><v-icon color="dark">mdi-map-marker-plus</v-icon></v-btn>
         <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
         <v-btn v-else @click="salvar">Salvar</v-btn>
         <v-btn @click="cancelar">Cancelar</v-btn>
@@ -118,7 +119,7 @@ export default {
     return {
       coordenadasCopia: [],
       dialogConfirm: false,
-      desativado: false,
+      dialogMapa: false,
       editando: false,
       menuini: false,
       menufim: false,
@@ -134,7 +135,7 @@ export default {
           value => (value.length || "") >= 3 || "Mínimo de 3 caracteres."
         ]
       },
-      mostraFormulario: false
+      mostraFormulario: false,
     };
   },
   methods: {
@@ -177,7 +178,6 @@ export default {
       this.evento = evento;
       this.editando = true;
       this.mostraFormulario = true
-      this.desativado = true;
       this.$refs.form.resetValidation();
     },
     salvar: function() {
@@ -237,11 +237,11 @@ export default {
     limpar: function() {
       this.evento = { id: '', nome: '', inicio: '', fim: '', tipoEvento: { id: '', descricao: '' }, latitude: '', longitude: ''  }
       this.editando = false
-      this.desativado = false
       this.participantes = []
       this.dialogConfirm = false
       this.mostraFormulario = false
       this.$refs.form.resetValidation()
+      this.$emit('dialog-map', false)
       this.$emit('alterar-coordenadas', [])
     },
     atualizarTextoTabela: function (id) {

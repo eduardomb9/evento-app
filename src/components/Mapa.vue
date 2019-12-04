@@ -1,13 +1,11 @@
 <style scoped>
   #mapa {
-    height: 280px;
+    height: 90%;
   }
 </style>
 
 <template>
-    <div class="container">
-        <div id="mapa"></div>
-    </div>
+    <div id="mapa"></div>
 </template>
 
 <script>

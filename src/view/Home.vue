@@ -1,9 +1,13 @@
 <template>
   <div id="home">
     <div v-if="token">
-      <evento-table :coordenadas="coordenadas" @alterar-coordenadas="alterarCoordenadas" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
+      <evento-table @dialog-map="toggleMapa" :coordenadas="coordenadas" @alterar-coordenadas="alterarCoordenadas" @add-participante="mostrarDialog" @emitir-snackbar="mostraSnack" ></evento-table>
       <participante-dialog :dialog="dialog" @fechar-dialog="fechar" :evento="eventoEdit" @emitir-snackbar="mostraSnack" />
-      <mapa :coordenadasEdit="coordenadas" @alterar-coordenadas="alterarCoordenadas" />
+      
+      <v-dialog fullscreen transition="dialog-bottom-transition" v-model="dialogMap">
+        <mapa :coordenadasEdit="coordenadas" @alterar-coordenadas="alterarCoordenadas" />
+        <v-btn style="height: 10%; font-size: 25px" color="dark" @click="dialogMap = false">Fechar</v-btn>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -11,7 +15,6 @@
 <script>
 import { http } from '../service/config'
 import EventoTable from '../components/EventoTable'
-import ParticipanteTable from '../components/ParticipanteTable'
 import ParticipanteDialog from '../components/ParticipanteDialog'
 import Mapa from '../components/Mapa'
 import Evento from '../service/eventos'
@@ -36,6 +39,7 @@ export default {
         messages: [],
         token: sessionStorage.getItem('token'),
         coordenadas: [],
+        dialogMap: false,
     }
   },
   methods: {
@@ -64,6 +68,9 @@ export default {
           }
         }
       }
+    },
+    toggleMapa: function (val) {
+      this.dialogMap = val
     },
   },
 }
