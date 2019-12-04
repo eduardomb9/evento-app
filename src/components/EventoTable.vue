@@ -18,8 +18,12 @@
   z-index: 1000;
 }
 .grupo-botoes {
-  float: right;
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.grupo-botoes button {
+  margin-left: 1%;
 }
 </style>
 
@@ -82,10 +86,10 @@
         label="Fim do Evento">
       </datetime>
       <div class="grupo-botoes">
-        <v-btn @click="$emit('dialog-map', true)"><v-icon color="dark">mdi-map-marker-plus</v-icon></v-btn>
-        <v-btn v-if="!editando" @click="adicionar">Adicionar</v-btn>
-        <v-btn v-else @click="salvar">Salvar</v-btn>
-        <v-btn @click="cancelar">Cancelar</v-btn>
+        <v-btn large @click="$emit('dialog-map', true)"><v-icon color="dark">mdi-map-marker-plus</v-icon></v-btn>
+        <v-btn large v-if="!editando" @click="adicionar">Adicionar</v-btn>
+        <v-btn large v-else @click="salvar">Salvar</v-btn>
+        <v-btn large @click="cancelar">Cancelar</v-btn>
       </div>
       <div style="display: block; clear: both"></div>
     </v-form>

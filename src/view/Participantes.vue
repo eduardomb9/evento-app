@@ -28,7 +28,7 @@
 <script lang="ts">
 
 import Participante from '../service/participantes'
-import ParticipanteForm from '../components/ParticipanteForm'
+import ParticipanteForm from '../components/ParticipanteForm.vue'
 
 export default {
     name: 'participante-table',
