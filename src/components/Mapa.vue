@@ -71,6 +71,8 @@ export default {
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1IjoibWFyYW5oYW9lZHUiLCJhIjoiY2szZXE5bWJ1MDB3ejNucnUwN2JsNXBiZiJ9.gyB6TW6Q0qGZ54njdGoiCA'
         }).addTo(this.mapa)
+
+        this.alterarCoordenadas(this.coordenadasEdit)
     }
 }
 </script>
