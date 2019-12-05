@@ -56,7 +56,7 @@
         </tr>
       </tbody>
     </v-simple-table>
-    <v-btn class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormulario = true">
+    <v-btn class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormularioAdicionar">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
 
@@ -203,6 +203,12 @@ export default {
       this.evento.inicio = this.eventoCopia.inicio
       this.evento.fim = this.eventoCopia.fim
       this.limpar()
+    },
+    mostraFormularioAdicionar: function() {
+      if (this.editando == true) {
+        this.cancelar()
+      }
+      this.mostraFormulario = true
     },
     adicionar: function() {
       this.messages = []
