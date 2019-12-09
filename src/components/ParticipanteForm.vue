@@ -5,8 +5,8 @@
       <v-text-field class="col-6" required v-model="participante.nome" placeholder="Nome" />
       </div>
       <div style="float: right">
-        <v-btn  @click="salvar">Salvar</v-btn>
-        <v-btn @click="cancelar">Cancelar</v-btn>
+        <v-btn aria-label="salvar editando participante"  @click="salvar">Salvar</v-btn>
+        <v-btn aria-label="cancelar editanto participante" @click="cancelar">Cancelar</v-btn>
       </div>
     </v-form>
 </template>

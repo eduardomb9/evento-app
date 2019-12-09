@@ -48,7 +48,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="secondary" @click="logar">Entrar</v-btn>
+                <v-btn aria-label="Entrar sistema" color="secondary" @click="logar">Entrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>

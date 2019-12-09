@@ -6,7 +6,7 @@
       
       <v-dialog fullscreen transition="dialog-bottom-transition" v-model="dialogMap">
         <mapa :coordenadasEdit="coordenadas" @alterar-coordenadas="alterarCoordenadas" />
-        <v-btn style="height: 10%; font-size: 25px" color="dark" @click="dialogMap = false">Fechar</v-btn>
+        <v-btn aria-label="fechar mapa" style="height: 10%; font-size: 25px" color="dark" @click="dialogMap = false">Fechar</v-btn>
       </v-dialog>
     </div>
   </div>

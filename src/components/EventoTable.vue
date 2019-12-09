@@ -49,14 +49,14 @@
             <span v-else>{{ data }}</span>
           </td>
           <td>
-            <button type="button" @click="remover(val.id)"><v-icon color="dark">mdi-delete</v-icon></button>
-            <button type="button" @click="editar(val)"><v-icon color="dark">mdi-pencil</v-icon></button>
-            <button type="button" @click="$emit('add-participante', val)"><v-icon color="dark">mdi-plus</v-icon></button>
+            <button aria-label="remover evento" type="button" @click="remover(val.id)"><v-icon color="dark">mdi-delete</v-icon></button>
+            <button aria-label="editar evento" type="button" @click="editar(val)"><v-icon color="dark">mdi-pencil</v-icon></button>
+            <button aria-label="adicionar participante" type="button" @click="$emit('add-participante', val)"><v-icon color="dark">mdi-plus</v-icon></button>
           </td>
         </tr>
       </tbody>
     </v-simple-table>
-    <v-btn class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormularioAdicionar">
+    <v-btn aria-label="adicionar evento" class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormularioAdicionar">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
 
@@ -86,10 +86,17 @@
         label="Fim do Evento">
       </datetime>
       <div class="grupo-botoes">
-        <v-btn large @click="$emit('dialog-map', true)"><v-icon color="dark">mdi-map-marker-plus</v-icon></v-btn>
-        <v-btn large v-if="!editando" @click="adicionar">Adicionar</v-btn>
-        <v-btn large v-else @click="salvar">Salvar</v-btn>
-        <v-btn large @click="cancelar">Cancelar</v-btn>
+        <v-btn 
+          label="Adicionar localização"
+          aria-label="adicionar localizacao ao evento" 
+          large dark 
+          @click="$emit('dialog-map', true)"
+        >
+          <v-icon color="dark">mdi-map-marker-plus</v-icon>
+        </v-btn>
+        <v-btn aria-label="confirmar adicionar evento" large v-if="!editando" @click="adicionar">Adicionar</v-btn>
+        <v-btn aria-label="salvar alteracoes evento" large v-else @click="salvar">Salvar</v-btn>
+        <v-btn aria-label="cancelar acao do evento" large @click="cancelar">Cancelar</v-btn>
       </div>
       <div style="display: block; clear: both"></div>
     </v-form>

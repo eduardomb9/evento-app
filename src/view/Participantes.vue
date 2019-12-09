@@ -14,8 +14,8 @@
         dark fixed-header height="288px"
         >
             <template v-slot:item.acao="{ item }">
-                <button type="button" @click="deletar(item.id)"><v-icon color="dark">mdi-delete</v-icon></button>
-                <button type="button" @click="editar(item)"><v-icon color="dark">mdi-pencil</v-icon></button>
+                <button aria-label="deletar participante" type="button" @click="deletar(item.id)"><v-icon color="dark">mdi-delete</v-icon></button>
+                <button aria-label="editar participante" type="button" @click="editar(item)"><v-icon color="dark">mdi-pencil</v-icon></button>
             </template>
         </v-data-table>
 

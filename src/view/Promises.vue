@@ -4,7 +4,7 @@
         <v-form>
             <v-text-field v-model="idParticipante" label="Participante" />
             <span>{{ nomeParticipante }}</span><br>
-            <v-btn @click="hello()">Obter Participante</v-btn>
+            <v-btn aria-label="teste" @click="hello()">Obter Participante</v-btn>
         </v-form>
     </v-container>
 </template>

@@ -14,8 +14,8 @@ h3 {
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="blue darken-1" text @click="cancelar">Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="adicionar">Adicionar</v-btn>
+          <v-btn aria-label="cancelar adicionar participante ao evento" color="blue darken-1" text @click="cancelar">Cancelar</v-btn>
+          <v-btn aria-label="adicionar participante ao evento" color="blue darken-1" text @click="adicionar">Adicionar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
