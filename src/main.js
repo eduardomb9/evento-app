@@ -4,6 +4,7 @@ import Datetime from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import vuetify from './plugins/vuetify'
 import router from './router'
+import './registerServiceWorker'
 
 Vue.use(Datetime)
 
