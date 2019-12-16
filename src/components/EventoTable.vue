@@ -25,10 +25,19 @@
 .grupo-botoes button {
   margin-left: 1%;
 }
+.v-skeleton-loader__image {
+  height: 100%;
+}
 </style>
 
 <template>
   <div id="eventoTable" class="container">
+    <v-skeleton-loader v-if="!loaded"
+      class="mx-auto"
+      height="288px"
+      type="image"
+    ></v-skeleton-loader>
+    <div v-else>
     <v-simple-table dark fixed-header height="288px">
       <thead>
         <th>Id</th>
@@ -59,10 +68,10 @@
     <v-btn aria-label="adicionar evento" class="mx-2 float-right" style="margin-top: -20px" fab dark color="indigo" @click="mostraFormularioAdicionar">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
+    </div>
 
-    <v-divider id="espaco" />
-    
     <v-form v-show="mostraFormulario" class="container" ref="form">
+      <v-divider id="espaco" />
       <h2 v-if="!editando"> Cadastrar Evento </h2>
       <h2 v-else> Editar Evento </h2>
       <v-text-field :rules="regras.nome" required v-model="evento.nome" placeholder="Nome" />
@@ -147,6 +156,7 @@ export default {
         ]
       },
       mostraFormulario: false,
+      loaded: false,
     };
   },
   methods: {
@@ -278,13 +288,15 @@ export default {
       return data_hora[0] + ' ' + data_hora[1]
     },
   },
-  mounted: function() {
-    Evento.listar().then(response => {
+  mounted: async function() {
+    this.loaded = false
+    await Evento.listar().then(response => {
       this.eventos = response.data;
     })
-    TipoEvento.listar().then(response => {  
+    await TipoEvento.listar().then(response => {  
         this.tiposEventos = response.data
     })
+    this.loaded = true
   }
 };
 </script>
