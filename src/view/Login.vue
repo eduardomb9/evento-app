@@ -93,5 +93,13 @@ export default {
           this.$refs.password.focus()
         },
     },
+    mounted: function() {
+      if (sessionStorage.token) {
+        this.$router.push('home').catch(e => {
+          this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
+          this.$emit('emitir-snackbar', this.messages)
+        })
+      }
+    }
 }
 </script>
