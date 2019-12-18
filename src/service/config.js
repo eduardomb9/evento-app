@@ -20,7 +20,7 @@ http.interceptors.response.use((response) => {
   return response
 }, (error) => {
   if (!!error.response || error.response.status === 401) {
-    window.location = '#/home'
+    window.location = '#/'
   }
 
   return Promise.reject(error)
