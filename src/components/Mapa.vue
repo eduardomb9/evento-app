@@ -33,6 +33,7 @@ export default {
                     this.marker = L.marker(this.coordenadas).addTo(this.mapa)
                 }
             }
+            this.centralizarMapa()
         }
     },
     data: function () {
@@ -57,11 +58,21 @@ export default {
                     this.marker = L.marker(this.coordenadas).addTo(this.mapa)
                 }
             }
+
+            this.centralizarMapa(coords)
+        },
+        centralizarMapa: function () {
+            if (this.coordenadas.length == 0) {
+                this.mapa.locate({setView: true, maxZoom: 10})
+            } else {
+                this.mapa.panTo(this.coordenadas)
+            }
         },
     },
     mounted () {
         this.mapa = L.map('mapa').fitWorld();
-        this.mapa.locate({setView: true, maxZoom: 10})
+        this.centralizarMapa()
+        this.mapa.setZoom(10)
 
         this.mapa.on('click', this.onMapClick)
 
