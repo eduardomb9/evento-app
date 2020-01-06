@@ -81,7 +81,7 @@ export default {
     cancelar: function () {
       this.participante = { id: '', nome: '' }
       this.dialog2 = false
-    },
+    }
   },
   mounted: function () {
     Participante.listar().then(resp => {
