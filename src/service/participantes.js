@@ -14,9 +14,9 @@ export default {
 
   adicionar: (participante) => {
     return http.post(url + '/', {
-        id: participante.id,
-        nome: participante.nome,
-        evento: participante.evento
+      id: participante.id,
+      nome: participante.nome,
+      evento: participante.evento
     })
   },
 
@@ -24,7 +24,7 @@ export default {
     return http.delete(url + '/' + id)
   },
 
-  editar:  (participante) => {
+  editar: (participante) => {
     return http.put(url + '/' + participante.id, participante)
   }
 

@@ -7,7 +7,10 @@
       <v-tab @click="$router.push('/participantes').catch(err => {})">
         Participantes
       </v-tab>
-      <v-tab class="float-right" @click="resetToken()">
+      <v-tab
+        class="float-right"
+        @click="resetToken()"
+      >
         <v-icon color="dark">mdi-power</v-icon>
       </v-tab>
     </v-tabs>
@@ -19,8 +22,8 @@ export default {
   methods: {
     resetToken: function () {
       sessionStorage.removeItem('token')
-      this.$router.push('/').catch(err => {})
-    },
+      this.$router.push('/').catch()
+    }
   }
 }
 </script>

@@ -2,14 +2,13 @@
   <div class="container">
     <h3> </h3>
     <v-expansion-panels>
-      <v-expansion-panel
-      >
+      <v-expansion-panel>
         <v-expansion-panel-header>LISTA DE PARTICIPANTES:</v-expansion-panel-header>
-        <v-expansion-panel-content 
-          v-for="part in participantes" 
+        <v-expansion-panel-content
+          v-for="part in participantes"
           :key="part.id"
         >
-        {{ part.nome }}
+          {{ part.nome }}
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -17,12 +16,10 @@
 </template>
 
 <script>
-import Participante from '../service/participantes'
-
 export default {
-    name: 'ParticipantesList',
-    props: {
-        participantes: Array,
-    },
+  name: 'ParticipantesList',
+  props: {
+    participantes: Array
+  }
 }
 </script>

@@ -1,6 +1,5 @@
 import { http } from './config'
 
-
 const url = 'api/evento'
 
 export default {
@@ -17,7 +16,7 @@ export default {
     return http.get(url + '/' + idEvento + '/participante')
   },
 
-  adicionarParticipante: (idEvento, participante ) => {
+  adicionarParticipante: (idEvento, participante) => {
     return http.post(url + '/' + idEvento + '/participante', participante)
   },
 
@@ -35,7 +34,7 @@ export default {
         descricao: evento.tipoEvento.descricao
       },
       latitude: evento.latitude,
-      longitude: evento.longitude,
+      longitude: evento.longitude
     })
   },
 

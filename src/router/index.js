@@ -8,21 +8,21 @@ import Login from '../view/Login'
 Vue.use(Router)
 
 const routes = [
-    {
-        name: 'login',
-        path: '*',
-        component: Login
-    }, 
-    {
-        name: 'participantes',
-        path: '/participantes',
-        component: Participantes
-    },
-    {
-        name: 'home',
-        path: '/home',
-        component: Home
-    }
+  {
+    name: 'login',
+    path: '*',
+    component: Login
+  },
+  {
+    name: 'participantes',
+    path: '/participantes',
+    component: Participantes
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: Home
+  }
 ]
 
 const router = new Router({ routes })

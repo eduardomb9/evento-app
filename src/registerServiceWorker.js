@@ -31,18 +31,18 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-self.addEventListener('install', function(e) {
+self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open('eventoapp').then(function(cache) {
+    caches.open('eventoapp').then(function (cache) {
       return cache.addAll([
         '/#/',
         '/#/home',
         '/#/participantes',
-        '/',
-      ]);
+        '/'
+      ])
     })
-  );
-});
+  )
+})
 
 self.addEventListener('fetch', evt => {
   evt.respondWith(
@@ -54,5 +54,5 @@ self.addEventListener('fetch', evt => {
         })
       })
     })
-  );
-});
+  )
+})

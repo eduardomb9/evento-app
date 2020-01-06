@@ -25,30 +25,34 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                    <v-icon></v-icon>
-                    <v-text-field
-                        autofocus
-                        label="Usuário"
-                        name="usuario"
-                        prepend-icon="mdi-account"
-                        type="text"
-                        v-model="user"
-                        @keyup.enter="focusPassword"
-                    />
-                    <v-text-field
-                        ref="password"
-                        label="Senha"
-                        name="senha"
-                        prepend-icon="mdi-lock"
-                        type="password"
-                        v-model="password"
-                        @keyup.enter="logar"
-                    />
+                  <v-icon></v-icon>
+                  <v-text-field
+                    autofocus
+                    label="Usuário"
+                    name="usuario"
+                    prepend-icon="mdi-account"
+                    type="text"
+                    v-model="user"
+                    @keyup.enter="focusPassword"
+                  />
+                  <v-text-field
+                    ref="password"
+                    label="Senha"
+                    name="senha"
+                    prepend-icon="mdi-lock"
+                    type="password"
+                    v-model="password"
+                    @keyup.enter="logar"
+                  />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn aria-label="Entrar sistema" color="secondary" @click="logar">Entrar</v-btn>
+                <v-btn
+                  aria-label="Entrar sistema"
+                  color="secondary"
+                  @click="logar"
+                >Entrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -61,45 +65,46 @@
 import Auth from '../service/auth'
 
 export default {
-    data: function (){
-        return {
-            user: '',
-            password: '',
-            messages: [],
+  data: function () {
+    return {
+      user: '',
+      password: '',
+      messages: []
+    }
+  },
+  methods: {
+    logar: function () {
+      Auth.logar(this.user.trim().toLowerCase(), this.password).then(response => {
+        if (response.data.token) {
+          sessionStorage.token = response.data.token
         }
-    },
-    methods: {
-        logar: function () {
-            let token = ''
-            Auth.logar(this.user.trim().toLowerCase(), this.password).then(response => {
-                if (response.data.token) {
-                    sessionStorage.token = response.data.token
-                }
-                this.cancelar()
-                this.$router.push('/home')
-            }).catch(error => {
-                this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
-                this.$emit('emitir-snackbar', this.messages)
-                this.password = ''
-                this.focusPassword()
-            })
-        },
-        cancelar: function() {
-            this.user = ''
-            this.password = ''
-            this.messages = []
-        },
-        focusPassword: function() {
-          this.$refs.password.focus()
-        },
-    },
-    mounted: function() {
-      if (sessionStorage.token) {
-        this.$router.push('home').catch(e => {
+        this.cancelar()
+        this.$router.push('/home')
+      }).catch(error => {
+        if (error) {
           this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
           this.$emit('emitir-snackbar', this.messages)
-        })
-      }
+          this.password = ''
+          this.focusPassword()
+        }
+      })
+    },
+    cancelar: function () {
+      this.user = ''
+      this.password = ''
+      this.messages = []
+    },
+    focusPassword: function () {
+      this.$refs.password.focus()
     }
+  },
+  mounted: function () {
+    if (sessionStorage.token) {
+      this.$router.push('home').catch(e => {
+        this.messages.push('Usuário e senha informados são inválidos. Verifique as credenciais.')
+        this.$emit('emitir-snackbar', this.messages)
+      })
+    }
+  }
 }
 </script>
