@@ -325,6 +325,13 @@ export default {
         return
       }
 
+      if (!this.coordenadas[0]) {
+        console.log('Evento sem localizacao')
+        this.messages.push('Localização do evento é obrigatório.')
+        this.$emit('emitir-snackbar', this.messages)
+        return
+      }
+
       this.evento.latitude = this.coordenadas[0]
       this.evento.longitude = this.coordenadas[1]
 
